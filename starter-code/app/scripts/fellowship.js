@@ -18,7 +18,10 @@ var buddies = [
 
 var lands = ['The Shire', 'Rivendell', 'Mordor'];
 var body = document.querySelector('body');
-
+var theHobs;
+var theBuds;
+var rivendell;
+var shire;
 
 // Part 1
 
@@ -38,7 +41,7 @@ function makeMiddleEarth() {
     
     eachLand.appendChild(landName);
     indLand.appendChild(eachLand);
-    alert(indLand);
+    //alert(indLand);
     midEarth.appendChild(indLand);
     
   }
@@ -55,17 +58,25 @@ function makeHobbits() {
   // give each hobbit a class of hobbit
   var hobbitArea = document.querySelector("article");
   var bunchOfHobbits = document.createElement("ul");
+
+  var hobbit;
+  var hobbitName;
+ 
   for (var i = 0; i < hobbits.length; i++) {
+    hobbit = document.createElement("li");
+    hobbit.setAttribute("class", "hobbit");
+    hobbitName = document.createTextNode(hobbits[i]);
     
-    var hobbitName = document.createTextNode(hobbits[i]);
-    var hobbitList = document.createElement("li");
-    hobbitList.setAttribute("id", "the-hobs");
-    hobbitList.appendChild(hobbitName);
+    hobbit.appendChild(hobbitName);
+    console.log(hobbit);
     //alert(hobbitList);
-    bunchOfHobbits.appendChild(hobbitList);
+    bunchOfHobbits.appendChild(hobbit);
 
   }
+  theHobs = bunchOfHobbits
+  console.log("the hobs are " + theHobs);
   hobbitArea.appendChild(bunchOfHobbits);
+  
 
 
 }
@@ -81,8 +92,9 @@ function keepItSecretKeepItSafe() {
   // add the ring as a child of Frodo
   var theRing = document.createElement("div");
   theRing.setAttribute("id", "the-ring");
-  body.appendChild(theRing);
   theRing.className = 'magic-imbued-jewelry';
+  body.appendChild(theRing);
+  
   document.getElementById("the-ring").addEventListener("click", nazgulScreech)
   var frodo = document.getElementsByTagName('li')[0];
   frodo.appendChild(theRing);
@@ -133,13 +145,37 @@ beautifulStranger();
 
 function leaveTheShire() {
   // assemble the hobbits and move them to Rivendell
-  var theHobs = document.querySelectorAll("#the-hobs");
-  var insertLocation = document.getElementsByTagName("article")[1];
-  var rivendellArea = document.getElementsByTagName("h1")[1];
-  console.log("the hobbs are" + theHobs);
-  console.log(rivendellArea);
-  console.log(theHobs.length);
-  insertLocation.insertBefore(rivendellArea, insertLocation.secondChild);
+  var theHobbits = document.getElementsByClassName("hobbit")
+  var landsAreas = document.getElementsByTagName("h1");
+  var newHobbitArea = document.createElement("ul");
+  
+  
+  for (var i = 0; i < landsAreas.length; i++) {
+    /*
+    if (landsAreas[i].innerHTML === "Rivendell") {
+      rivendell = landsAreas[i];
+    } else {
+
+    }
+    */
+    switch (landsAreas[i].innerHTML) {
+      case "Rivendell":
+        rivendell = landsAreas[i];
+      case "Shire":
+        shire = landsAreas[i];
+      default: 
+        break;
+    }
+    
+  }
+ 
+  var shire = theHobbits.parentNode;
+  console.log(shire);
+  var duplicateHobbits = theHobs.cloneNode(true);
+  rivendell.appendChild(duplicateHobbits);
+  theHobs.parentNode.removeChild(theHobs);
+  theHobs = duplicateHobbits;
+  
 }
 
 leaveTheShire();
@@ -151,16 +187,20 @@ function forgeTheFellowShip() {
   // create a new div called 'the-fellowship' within rivendell
   // add each hobbit and buddy one at a time to 'the-fellowship'
   // after each character is added make an alert that they have joined your party
+  
   var newFellowShipDiv = document.createElement("div");
   newFellowShipDiv.setAttribute("id", "the-fellowship");
+  rivendell.appendChild(newFellowShipDiv);
+ 
   var theFellows = document.getElementsByTagName("li")
   for(var i = 0; i < theFellows.length; i++ ) {
     theFellows[i].setAttribute("id", "the-fellowship");
     alert("has joined the party");
   }
+  
 }
 
-forgeTheFellowShip();
+// forgeTheFellowShip();
 
 
 // Part 8
@@ -171,7 +211,7 @@ function theBalrog() {
   // apply style to the element
   // make the background 'white', add a grey border
   var gandalf = document.getElementsByTagName("li")[4];
-  gandalf.setInnerHTML = "Gandalf the White";
+  gandalf.textContent = "Gandalf the White";
   gandalf.setAttribute("style", "background-color: white, border: 2px solid grey");
 }
 
