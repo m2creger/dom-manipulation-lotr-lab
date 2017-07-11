@@ -108,9 +108,23 @@ function makeBuddies() {
   // create an aside tag
   // attach an unordered list of the 'buddies' in the aside
   // insert your aside as a child element of rivendell
+  var landsAreas = document.getElementsByTagName("h1");
   var newBuddies = document.createElement("aside");
   var listOfBuddies = document.createElement("ul");
   newBuddies.appendChild(listOfBuddies);
+
+  for (var i = 0; i < landsAreas.length; i++) {
+   
+    switch (landsAreas[i].innerHTML) {
+      case "Rivendell":
+        rivendell = landsAreas[i];
+        break;
+      default: 
+        break;
+    }
+    
+  }
+
 
   for (var i = 0; i < buddies.length; i++) {
     
@@ -122,7 +136,7 @@ function makeBuddies() {
     listOfBuddies.appendChild(someBuddies);
 
   }
-  body.appendChild(newBuddies);
+  rivendell.appendChild(newBuddies);
 
 }
 
